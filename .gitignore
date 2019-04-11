@@ -1,0 +1,4 @@
+config.toml
+*.db
+static/u/
+.DS_Store

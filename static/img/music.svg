@@ -1,0 +1,7 @@
+<svg role="img" width="256" height="256" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <path id="a" d="m5 3 h4 v-1 h3 v9 h-1 v1 h-3 v-2 h1 v-1 h2 v-5 h-2 v1 h-3 v7 h-1 v1 h-3 v-2 h1 v-1 h2 v-8Z" />
+    </defs>
+    <use href="#a" fill="black" x="1" y="1"  />
+    <use href="#a" fill="lightpink" />
+</svg>

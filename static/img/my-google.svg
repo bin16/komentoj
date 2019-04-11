@@ -1,0 +1,6 @@
+<svg role="img" width="256" height="256" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 2 h4 v1 h2 v1 h-1 v1 h-5 v1 h-1 v1 h-1 v-1 h-1 v-2 h1 v-1 h2 v-1 Z" fill="red" />
+    <path d="M2 6 h2 v1 h1 v3 h-1 v1 h-1 v-1 h-1 v-5 Z" fill="orange" />
+    <path d="M4 10 h2 v1 h4 v1 h1 v1 h-1 v1 h-4 v-1 h-2 v-1 h-1 v-1 h1 Z" fill="green" />
+    <path d="M8 7 h6 v3 h-1 v2 h-1 v1 h-1 v-1 h-1 v-2 h1 v-1 h-3 v-2 Z" fill="blue" />
+</svg>

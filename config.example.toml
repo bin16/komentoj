@@ -1,0 +1,24 @@
+driver = "sqlite3" # sqlite3 only
+hostname = "comments.ook.dev"
+
+[app]
+hostname = "localhost"
+port = "8080"
+key = "xxxxxx"
+name = "xxxxxx"
+staticDir = "static"
+userImageDir = "u"
+database = "data.db" # sqlite3 name.db 
+
+[oauth2.github]
+name = "github"
+key = "xxxxxx"
+secret = "xxxxxx"
+profileURL = "https://api.github.com/user?access_token="
+
+[oauth2.google]
+name = "google"
+key = "xxxxxx"
+secret = "xxxxxx"
+redirectURL = "xxxxxx/auth/google/callback"
+profileURL = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token="

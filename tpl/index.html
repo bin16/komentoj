@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="comments:hostname" content="{{ .hostname }}">
+    <meta name="comments:target" content="{{ .target }}">
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' unpkg.com 'sha256-ElSdF6Hh+/K9sW1nNq249VwA1aYILcXAaF0mojXv/b8=';">
+    <title>Comments</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <!-- 😜 -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet"> -->
+    <style>
+    html {
+        font-family: 'Press Start 2P', cursive;
+    }
+    .container {
+        max-width: 960px;
+        margin: 1em auto 0;
+    }
+
+    .comment {
+        padding: .2em;
+        font-size: 14px;
+    }
+
+    .comment + .comment {
+        border-top: 1px solid #dddddd;
+    }
+
+    .comment-textarea {
+        display: block;
+        width: 100%;
+        min-height: 60px;
+        margin: .5em 0;
+        resize: vertical;
+    }
+
+    .comment-content {
+        padding: .4em 0;
+    }
+
+    .g {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .g-c-side {
+        width: 64px;
+        margin: .5em 0;
+    }
+
+    .g-c-fill {
+        flex: 1;
+        margin: .5em 1em;
+    }
+
+    figure {
+        margin: 0;
+        box-shadow: 1px 1px 3px #ddd;
+    }
+
+    img {
+        display: block;
+        background: #eee;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .pure-button-google {
+        background: lightcoral;
+    }
+
+    .i-google {
+        padding: .5em 1em;
+        -webkit-mask: center / 1.2em url(/img/my-google.svg) no-repeat;
+        mask: center / 1.2em url(/img/my-google.svg) no-repeat;
+    }
+
+    .i-github {
+        padding: .5em 1em;
+        -webkit-mask: center / 1.2em url(/img/my-github.svg) no-repeat;
+        mask: center / 1.2em url(/img/my-github.svg) no-repeat;
+    }
+    .pure-button-primary [class^=i-] {
+        background: #ffffff;
+    }
+
+    .comment-username {
+        font-weight: bold;
+        user-select: none;
+    }
+
+    hr {
+        height: 2px;
+        border: none;
+        background: #ddd;
+    }
+
+    .message {
+        margin: 2em 0;
+        padding: 1em;
+        border: 1px solid #dddddd;
+        border-radius: 2px;
+
+        background: #fdfffc;
+        color: #0a2463;
+    }
+
+    .message-error {
+        background: #ffe5d9;;
+        color: #c42021;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="message-box">
+        </div>
+
+        <div class="g">
+            <div class="g-c-side">
+                <figure>
+                    {{ if .authed }}
+                        <img id="user-image" src="{{ .user.Image }}" width="64" height="64" alt="User avatar">
+                    {{ else }}
+                        <img src="/img/profile.svg" width="64" height="64" alt="User Avatar">
+                    {{ end }}
+                </figure>
+            </div>
+            <div class="g-c-fill">
+                {{ if .authed }}
+                    <span class="comment-username" id="username">{{ .user.Name }}</span>
+                {{ else }}
+                    <span>Login to Comment</span>
+                {{ end }}
+
+                <form id="form" class="pure-form">
+                    <fieldset>
+                        <textarea required id="content" class="comment-textarea" placeholder="Your comment..."></textarea>
+                        {{ if .authed }}
+                            <div class="pure-controls">
+                                <button id="submit" class="pure-button pure-button-primary pure-button-submit">Comment</button>
+                                <a class="pure-button" href="/logout?b={{ .backURL }}">Logout</a>
+                            </div>
+                        {{ else }}
+                            <div class="pure-controls">
+                                <a class="pure-button pure-button-primary" href="/auth/google?b={{ .backURL }}">
+                                    <i class="i-google"></i>
+                                    <span>Login with Google</span>
+                                </a>
+                                <a class="pure-button pure-button-primary" href="/auth/github?b={{ .backURL }}">
+                                    <i class="i-github"></i>
+                                    <span>Login with Github</span>
+                                </a>
+                            </div>
+                        {{ end }}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <div class="comment-list" id="result">
+        </div>
+    </div>
+    {{ if .authed }}
+        <script src="/s/all.js"></script>
+    {{ end }}
+</body>
+</html>
