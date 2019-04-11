@@ -1,9 +1,11 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
+	"path"
 	"time"
 
 	"github.com/gin-contrib/sessions"
@@ -16,7 +18,8 @@ import (
 )
 
 var (
-	cfg appConfig
+	workDir string = ""
+	cfg     appConfig
 )
 
 // for userID
@@ -28,14 +31,21 @@ func asInt(a interface{}) int {
 	return 0
 }
 
+func fullPath(name string) string {
+	return path.Join(workDir, name)
+}
+
 func main() {
+	flag.StringVar(&workDir, "work-dir", ".", "--work-dir xxx | Work dir must contain config.toml")
+	flag.Parse()
+
 	/**** load config.toml ==> cfg ****/
-	if _, err := toml.DecodeFile("config.toml", &cfg); err != nil {
+	if _, err := toml.DecodeFile(fullPath("config.toml"), &cfg); err != nil {
 		log.Fatal(err)
 	}
 
 	/**** Init database ****/
-	err := initSqliteDB(cfg.App.Database)
+	err := initSqliteDB(fullPath(cfg.App.Database))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,8 +56,8 @@ func main() {
 	/**** gin Routers ****/
 	r := gin.Default()
 	r.Use(sessions.Sessions("is", store))
-	r.Use(static.Serve("/", static.LocalFile("./static", false)))
-	r.LoadHTMLGlob("tpl/*")
+	r.Use(static.Serve("/", static.LocalFile(fullPath(cfg.App.StaticDir), false)))
+	r.LoadHTMLGlob(fullPath("tpl/*"))
 	r.GET("/", func(c *gin.Context) {
 		hostname := c.Query("hostname")
 		target := c.Query("target")
@@ -199,7 +209,7 @@ func main() {
 		c.SetCookie("is", "", -1, "/", cfg.App.Hostname, false, true)
 		c.Redirect(http.StatusTemporaryRedirect, backURL)
 	})
-	r.Run()
+	r.Run(":" + cfg.App.Port)
 }
 
 /****** Utils ******/

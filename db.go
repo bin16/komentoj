@@ -13,7 +13,7 @@ import (
 
 func mkDB(c appConfig) (*myDB, error) {
 	result := myDB{}
-	db, err := sql.Open(c.Driver, c.App.Database)
+	db, err := sql.Open(c.Driver, fullPath(c.App.Database))
 	if err != nil {
 		return &result, err
 	}
