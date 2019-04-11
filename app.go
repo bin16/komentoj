@@ -209,6 +209,7 @@ func main() {
 
 		sess := sessions.Default(c)
 		sess.Clear()
+		sess.Save()
 
 		c.Redirect(http.StatusTemporaryRedirect, backURL)
 	})
