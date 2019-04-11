@@ -51,7 +51,7 @@ func main() {
 	}
 
 	/**** cookie store ****/
-	store := cookie.NewStore([]byte("Hello@"))
+	store := cookie.NewStore([]byte(cfg.App.Key))
 
 	/**** gin Routers ****/
 	r := gin.Default()
@@ -206,7 +206,10 @@ func main() {
 	})
 	r.GET("/logout", func(c *gin.Context) {
 		backURL := c.Query("b")
-		c.SetCookie("is", "", -1, "/", cfg.App.Hostname, false, true)
+
+		sess := sessions.Default(c)
+		sess.Clear()
+
 		c.Redirect(http.StatusTemporaryRedirect, backURL)
 	})
 	r.Run(":" + cfg.App.Port)
