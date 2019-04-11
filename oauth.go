@@ -42,8 +42,8 @@ type googleProfile struct {
 
 func downloadUserImage(imageURL string) (string, error) {
 	resultPath := ""
-	rootDir := cfg.App.StaticDir
-	imgDir := cfg.App.UserImageDir
+	rootDir := fullPath(cfg.App.StaticDir)
+	imgDir := cfg.App.UserImageDir // name
 	resp, err := http.Get(imageURL)
 	if err != nil {
 		fmt.Println(err)
